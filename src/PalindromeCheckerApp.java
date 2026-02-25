@@ -15,7 +15,7 @@ public class PalindromeCheckerApp{
         System.out.println("System initialized successfully");
     }
 
-    public static void checkHardcodedPalindrome {
+    public static void checkHardcodedPalindrome() {
         String input = "madam";
         boolean isPalindrome = true;
 
