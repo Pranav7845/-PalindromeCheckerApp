@@ -1,4 +1,8 @@
 import java.util.*;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
+
 public class PalindromeCheckerApp{
     public static void main(String[] args){
         showWelcome(); //UC1
@@ -6,6 +10,7 @@ public class PalindromeCheckerApp{
         reverseBasedPalindromeCheck(); // UC3
         checkPalindromeUsingArray(); //UC4
         stackBasedPalindromeCheck(); // UC5
+        queueStackPalindromeCheck(); //UC6
 
     }
     //UC1 : Welcome Message
@@ -15,7 +20,7 @@ public class PalindromeCheckerApp{
         System.out.println("System initialized successfully");
     }
 
-    public static void checkHardcodedPalindrome {
+    public static void checkHardcodedPalindrome() {
         String input = "madam";
         boolean isPalindrome = true;
 
@@ -85,7 +90,7 @@ public class PalindromeCheckerApp{
     }
     // UC5: Stack-Based Palindrome Check
     public static void stackBasedPalindromeCheck() {
-        String input = "madam";
+        String input = "noon";
         boolean isPalindrome = isPalindromeUsingStack(input);
 
         System.out.println("Input text: " + input);
@@ -103,5 +108,35 @@ public class PalindromeCheckerApp{
             reversed += stack.pop();
         }
         return str.equals(reversed);
+    }
+    //UC6 : Queue Stack Palindrome Check
+    public static void queueStackPalindromeCheck() {
+        String input = "madam";  // hardcoded string
+        boolean isPalindrome = isPalindromeUsingQueueStack(input);
+
+        System.out.println("UC6 Result");
+        System.out.println("Input text: " + input);
+        System.out.println("Is it a Palindrome? : " + isPalindrome);
+    }
+
+    public static boolean isPalindromeUsingQueueStack(String str) {
+        Queue<Character> queue = new LinkedList<>();
+        Stack<Character> stack = new Stack<>();
+
+        // Enqueue into queue and push into stack
+        for (int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+            queue.add(c);
+            stack.push(c);
+        }
+
+        // Compare dequeue vs pop
+        while (!queue.isEmpty()) {
+            if (!queue.remove().equals(stack.pop())) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
