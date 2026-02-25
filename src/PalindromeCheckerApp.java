@@ -5,6 +5,7 @@ public class PalindromeCheckerApp{
         checkHardcodedPalindrome(); //UC2
         reverseBasedPalindromeCheck(); // UC3
         checkPalindromeUsingArray(); //UC4
+        stackBasedPalindromeCheck(); // UC5
 
     }
     //UC1 : Welcome Message
@@ -54,6 +55,7 @@ public class PalindromeCheckerApp{
 
         System.out.println();
     }
+    // UC4 : Character Array Based Palindrome Check
     public static void checkPalindromeUsingArray() {
 
         Scanner scanner = new Scanner(System.in);
@@ -80,5 +82,26 @@ public class PalindromeCheckerApp{
         // Output
         System.out.println("Input text: " + input);
         System.out.println("Is it a Palindrome? : " + isPalindrome);
+    }
+    // UC5: Stack-Based Palindrome Check
+    public static void stackBasedPalindromeCheck() {
+        String input = "madam";
+        boolean isPalindrome = isPalindromeUsingStack(input);
+
+        System.out.println("Input text: " + input);
+        System.out.println("Is it a Palindrome? : " + isPalindrome);
+    }
+
+    public static boolean isPalindromeUsingStack(String str) {
+        Stack<Character> stack = new Stack<>();
+        for (int i = 0; i < str.length(); i++) {
+            stack.push(str.charAt(i));
+        }
+
+        String reversed = "";
+        while (!stack.isEmpty()) {
+            reversed += stack.pop();
+        }
+        return str.equals(reversed);
     }
 }
