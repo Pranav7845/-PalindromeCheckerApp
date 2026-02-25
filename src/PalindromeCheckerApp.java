@@ -85,7 +85,7 @@ public class PalindromeCheckerApp{
     }
     // UC5: Stack-Based Palindrome Check
     public static void stackBasedPalindromeCheck() {
-        String input = "madam";
+        String input = "noon";
         boolean isPalindrome = isPalindromeUsingStack(input);
 
         System.out.println("Input text: " + input);
