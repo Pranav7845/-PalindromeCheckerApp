@@ -4,6 +4,7 @@ public class PalindromeCheckerApp{
         showWelcome(); //UC1
         checkHardcodedPalindrome(); //UC2
         reverseBasedPalindromeCheck(); // UC3
+        checkPalindromeUsingArray(); //UC4
 
     }
     //UC1 : Welcome Message
@@ -52,5 +53,32 @@ public class PalindromeCheckerApp{
         }
 
         System.out.println();
+    }
+    public static void checkPalindromeUsingArray() {
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter a text: ");
+        String input = scanner.nextLine();
+
+        // Convert String to char array
+        char[] characters = input.toCharArray();
+
+        // Two-pointer technique
+        int start = 0;
+        int end = characters.length - 1;
+        boolean isPalindrome = true;
+
+        while (start < end) {
+            if (characters[start] != characters[end]) {
+                isPalindrome = false;
+                break;
+            }
+            start++;
+            end--;
+        }
+
+        // Output
+        System.out.println("Input text: " + input);
+        System.out.println("Is it a Palindrome? : " + isPalindrome);
     }
 }
