@@ -16,6 +16,7 @@ public class PalindromeCheckerApp {
         dequeBasedPalindromeCheck(); //UC7
         linkedListBasedPalindromeCheck(); //UC8
         recursivePalindromeCheck(); //UC9
+        caseInsensitiveSpaceIgnoredCheck(); //UC10
     }
 
     //UC1 : Welcome Message
@@ -109,7 +110,7 @@ public class PalindromeCheckerApp {
 
     //UC6 : Queue Stack Palindrome Check
     public static void queueStackPalindromeCheck() {
-        String input = "civic";
+        String input = "madam";
         boolean isPalindrome = isPalindromeUsingQueueStack(input);
 
         System.out.println("UC6 Result");
@@ -139,7 +140,7 @@ public class PalindromeCheckerApp {
 
     //UC7 : Deque-Based Optimized Palindrome Checker
     public static void dequeBasedPalindromeCheck() {
-        String input = "refer";
+        String input = "racecar";
         boolean isPalindrome = isPalindromeUsingDeque(input);
 
         System.out.println("UC7 Result");
@@ -271,6 +272,7 @@ public class PalindromeCheckerApp {
         System.out.println("UC9 Result");
         System.out.println("Input text: " + input);
         System.out.println("Is it a Palindrome? : " + isPalindrome);
+        System.out.println();
     }
 
     public static boolean isPalindromeRecursive(String str, int start, int end) {
@@ -281,5 +283,38 @@ public class PalindromeCheckerApp {
             return false;
         }
         return isPalindromeRecursive(str, start + 1, end - 1);
+    }
+
+    //UC10 : Case-Insensitive & Space-Ignored Palindrome Checker
+    public static void caseInsensitiveSpaceIgnoredCheck() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter a text for UC10 Case-Insensitive Check: ");
+        String input = scanner.nextLine();
+
+        // Normalize string: remove spaces and convert to lower case
+        String normalized = input.replaceAll("\\s+", "").toLowerCase();
+
+        boolean isPalindrome = isPalindrome(normalized);
+
+        System.out.println("UC10 Result");
+        System.out.println("Original text: " + input);
+        System.out.println("Normalized text: " + normalized);
+        System.out.println("Is it a Palindrome? : " + isPalindrome);
+        System.out.println();
+    }
+
+    public static boolean isPalindrome(String str) {
+        int start = 0;
+        int end = str.length() - 1;
+
+        while (start < end) {
+            if (str.charAt(start) != str.charAt(end)) {
+                return false;
+            }
+            start++;
+            end--;
+        }
+
+        return true;
     }
 }
