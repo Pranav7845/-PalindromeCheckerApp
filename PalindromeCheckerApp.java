@@ -15,6 +15,7 @@ public class PalindromeCheckerApp {
         queueStackPalindromeCheck(); //UC6
         dequeBasedPalindromeCheck(); //UC7
         linkedListBasedPalindromeCheck(); //UC8
+        recursivePalindromeCheck(); //UC9
     }
 
     //UC1 : Welcome Message
@@ -53,13 +54,7 @@ public class PalindromeCheckerApp {
 
         System.out.println("UC3 Result");
         System.out.println("Input text: " + input);
-
-        if (input.equals(reversed)) {
-            System.out.println("Is it a Palindrome? : true");
-        } else {
-            System.out.println("Is it a Palindrome? : false");
-        }
-
+        System.out.println("Is it a Palindrome? : " + input.equals(reversed));
         System.out.println();
     }
 
@@ -114,7 +109,7 @@ public class PalindromeCheckerApp {
 
     //UC6 : Queue Stack Palindrome Check
     public static void queueStackPalindromeCheck() {
-        String input = "madam";
+        String input = "civic";
         boolean isPalindrome = isPalindromeUsingQueueStack(input);
 
         System.out.println("UC6 Result");
@@ -144,7 +139,7 @@ public class PalindromeCheckerApp {
 
     //UC7 : Deque-Based Optimized Palindrome Checker
     public static void dequeBasedPalindromeCheck() {
-        String input = "racecar";
+        String input = "refer";
         boolean isPalindrome = isPalindromeUsingDeque(input);
 
         System.out.println("UC7 Result");
@@ -183,6 +178,7 @@ public class PalindromeCheckerApp {
         boolean isPalindrome = isPalindromeLinkedList(head);
         System.out.println("Input text: " + input);
         System.out.println("Is it a Palindrome? : " + isPalindrome);
+        System.out.println();
     }
 
     // Node class
@@ -196,7 +192,6 @@ public class PalindromeCheckerApp {
         }
     }
 
-    // Convert string to linked list
     public static LinkedListNode createLinkedList(String str) {
         if (str == null || str.isEmpty()) return null;
 
@@ -211,7 +206,6 @@ public class PalindromeCheckerApp {
         return head;
     }
 
-    // Print linked list
     public static void printLinkedList(LinkedListNode head) {
         LinkedListNode current = head;
         while (current != null) {
@@ -221,23 +215,19 @@ public class PalindromeCheckerApp {
         System.out.println();
     }
 
-    // Check if linked list is palindrome
     public static boolean isPalindromeLinkedList(LinkedListNode head) {
         if (head == null || head.next == null) return true;
 
         LinkedListNode slow = head;
         LinkedListNode fast = head;
 
-        // Find middle
         while (fast.next != null && fast.next.next != null) {
             slow = slow.next;
             fast = fast.next.next;
         }
 
-        // Reverse second half
         LinkedListNode secondHalf = reverseLinkedList(slow.next);
 
-        // Compare halves
         LinkedListNode firstHalf = head;
         LinkedListNode tempSecond = secondHalf;
         boolean palindrome = true;
@@ -251,13 +241,11 @@ public class PalindromeCheckerApp {
             tempSecond = tempSecond.next;
         }
 
-        // Restore second half (optional)
         slow.next = reverseLinkedList(secondHalf);
 
         return palindrome;
     }
 
-    // Reverse linked list
     public static LinkedListNode reverseLinkedList(LinkedListNode head) {
         LinkedListNode prev = null;
         LinkedListNode current = head;
@@ -270,5 +258,28 @@ public class PalindromeCheckerApp {
         }
 
         return prev;
+    }
+
+    //UC9 : Recursive Palindrome Checker
+    public static void recursivePalindromeCheck() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter a text for UC9 Recursive Check: ");
+        String input = scanner.nextLine();
+
+        boolean isPalindrome = isPalindromeRecursive(input, 0, input.length() - 1);
+
+        System.out.println("UC9 Result");
+        System.out.println("Input text: " + input);
+        System.out.println("Is it a Palindrome? : " + isPalindrome);
+    }
+
+    public static boolean isPalindromeRecursive(String str, int start, int end) {
+        if (start >= end) {
+            return true;
+        }
+        if (str.charAt(start) != str.charAt(end)) {
+            return false;
+        }
+        return isPalindromeRecursive(str, start + 1, end - 1);
     }
 }
