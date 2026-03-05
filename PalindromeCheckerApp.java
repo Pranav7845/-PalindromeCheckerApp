@@ -11,9 +11,10 @@ public class PalindromeCheckerApp {
         checkHardcodedPalindrome(); //UC2
         reverseBasedPalindromeCheck(); // UC3
         checkPalindromeUsingArray(); //UC4
-        stackBasedPalindromeCheck(); // UC5
+        stackBasedPalindromeCheck(); //UC5
         queueStackPalindromeCheck(); //UC6
         dequeBasedPalindromeCheck(); //UC7
+        linkedListBasedPalindromeCheck(); //UC8
     }
 
     //UC1 : Welcome Message
@@ -43,7 +44,6 @@ public class PalindromeCheckerApp {
 
     // UC3: Reverse String Based Palindrome Check
     public static void reverseBasedPalindromeCheck() {
-
         String input = "madam";
         String reversed = "";
 
@@ -65,13 +65,11 @@ public class PalindromeCheckerApp {
 
     // UC4 : Character Array Based Palindrome Check
     public static void checkPalindromeUsingArray() {
-
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter a text: ");
         String input = scanner.nextLine();
 
         char[] characters = input.toCharArray();
-
         int start = 0;
         int end = characters.length - 1;
         boolean isPalindrome = true;
@@ -102,13 +100,11 @@ public class PalindromeCheckerApp {
 
     public static boolean isPalindromeUsingStack(String str) {
         Stack<Character> stack = new Stack<>();
-
         for (int i = 0; i < str.length(); i++) {
             stack.push(str.charAt(i));
         }
 
         String reversed = "";
-
         while (!stack.isEmpty()) {
             reversed += stack.pop();
         }
@@ -118,7 +114,6 @@ public class PalindromeCheckerApp {
 
     //UC6 : Queue Stack Palindrome Check
     public static void queueStackPalindromeCheck() {
-
         String input = "madam";
         boolean isPalindrome = isPalindromeUsingQueueStack(input);
 
@@ -129,7 +124,6 @@ public class PalindromeCheckerApp {
     }
 
     public static boolean isPalindromeUsingQueueStack(String str) {
-
         Queue<Character> queue = new LinkedList<>();
         Stack<Character> stack = new Stack<>();
 
@@ -150,17 +144,16 @@ public class PalindromeCheckerApp {
 
     //UC7 : Deque-Based Optimized Palindrome Checker
     public static void dequeBasedPalindromeCheck() {
-
         String input = "racecar";
         boolean isPalindrome = isPalindromeUsingDeque(input);
 
         System.out.println("UC7 Result");
         System.out.println("Input text: " + input);
         System.out.println("Is it a Palindrome? : " + isPalindrome);
+        System.out.println();
     }
 
     public static boolean isPalindromeUsingDeque(String str) {
-
         Deque<Character> deque = new LinkedList<>();
 
         for (int i = 0; i < str.length(); i++) {
@@ -168,7 +161,6 @@ public class PalindromeCheckerApp {
         }
 
         while (deque.size() > 1) {
-
             char front = deque.removeFirst();
             char rear = deque.removeLast();
 
@@ -178,5 +170,105 @@ public class PalindromeCheckerApp {
         }
 
         return true;
+    }
+
+    //UC8 : Linked List Based Palindrome Checker
+    public static void linkedListBasedPalindromeCheck() {
+        String input = "level";
+        LinkedListNode head = createLinkedList(input);
+
+        System.out.print("UC8 Linked List: ");
+        printLinkedList(head);
+
+        boolean isPalindrome = isPalindromeLinkedList(head);
+        System.out.println("Input text: " + input);
+        System.out.println("Is it a Palindrome? : " + isPalindrome);
+    }
+
+    // Node class
+    static class LinkedListNode {
+        char data;
+        LinkedListNode next;
+
+        LinkedListNode(char data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+
+    // Convert string to linked list
+    public static LinkedListNode createLinkedList(String str) {
+        if (str == null || str.isEmpty()) return null;
+
+        LinkedListNode head = new LinkedListNode(str.charAt(0));
+        LinkedListNode current = head;
+
+        for (int i = 1; i < str.length(); i++) {
+            current.next = new LinkedListNode(str.charAt(i));
+            current = current.next;
+        }
+
+        return head;
+    }
+
+    // Print linked list
+    public static void printLinkedList(LinkedListNode head) {
+        LinkedListNode current = head;
+        while (current != null) {
+            System.out.print(current.data);
+            current = current.next;
+        }
+        System.out.println();
+    }
+
+    // Check if linked list is palindrome
+    public static boolean isPalindromeLinkedList(LinkedListNode head) {
+        if (head == null || head.next == null) return true;
+
+        LinkedListNode slow = head;
+        LinkedListNode fast = head;
+
+        // Find middle
+        while (fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        // Reverse second half
+        LinkedListNode secondHalf = reverseLinkedList(slow.next);
+
+        // Compare halves
+        LinkedListNode firstHalf = head;
+        LinkedListNode tempSecond = secondHalf;
+        boolean palindrome = true;
+
+        while (tempSecond != null) {
+            if (firstHalf.data != tempSecond.data) {
+                palindrome = false;
+                break;
+            }
+            firstHalf = firstHalf.next;
+            tempSecond = tempSecond.next;
+        }
+
+        // Restore second half (optional)
+        slow.next = reverseLinkedList(secondHalf);
+
+        return palindrome;
+    }
+
+    // Reverse linked list
+    public static LinkedListNode reverseLinkedList(LinkedListNode head) {
+        LinkedListNode prev = null;
+        LinkedListNode current = head;
+
+        while (current != null) {
+            LinkedListNode nextNode = current.next;
+            current.next = prev;
+            prev = current;
+            current = nextNode;
+        }
+
+        return prev;
     }
 }
